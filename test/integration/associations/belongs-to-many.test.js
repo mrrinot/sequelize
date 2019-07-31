@@ -163,9 +163,11 @@ describe(Support.getTestDialectTeaser('BelongsToMany'), () => {
         return User.findOne({
           where: { username: 'John' },
           include: [
-            { model: Task, required: false, include: [
-              { model: Label, required: false, where: { isActive: true } }
-            ] }
+            {
+              model: Task, required: false, include: [
+                { model: Label, required: false, where: { isActive: true } }
+              ]
+            }
           ]
         });
       }).then(john => {
@@ -316,9 +318,11 @@ describe(Support.getTestDialectTeaser('BelongsToMany'), () => {
           return Promise.join(
             User.findOne({
               where: {},
+              logging: console.log,
               include: [Group]
             }),
             User.findAll({
+              logging: console.log,
               include: [Group]
             })
           );
@@ -386,28 +390,32 @@ describe(Support.getTestDialectTeaser('BelongsToMany'), () => {
           );
         }).then(() => {
           return Promise.join(
+            // User.findOne({
+            //   where: {},
+            //   logging: console.log,
+            //   include: [
+            //     { model: Company, include: [Group] }
+            //   ]
+            // })
+            // User.findAll({
+            //   logging: console.log,
+            //   include: [
+            //     { model: Company, include: [Group] }
+            //   ]
+            // })
             User.findOne({
               where: {},
-              include: [
-                { model: Company, include: [Group] }
-              ]
-            }),
-            User.findAll({
-              include: [
-                { model: Company, include: [Group] }
-              ]
-            }),
-            User.findOne({
-              where: {},
-              include: [
-                { model: Company, required: true, include: [Group] }
-              ]
-            }),
-            User.findAll({
+              logging: console.log,
               include: [
                 { model: Company, required: true, include: [Group] }
               ]
             })
+            // User.findAll({
+            //   logging: console.log,
+            //   include: [
+            //     { model: Company, required: true, include: [Group] }
+            //   ]
+            // })
           );
         });
       });
@@ -894,9 +902,9 @@ describe(Support.getTestDialectTeaser('BelongsToMany'), () => {
         this.comment = comment;
         this.tag = tag;
         return this.post.setTags([this.tag]);
-      }).then( () => {
+      }).then(() => {
         return this.comment.setTags([this.tag]);
-      }).then( () => {
+      }).then(() => {
         return Promise.all([
           this.post.getTags(),
           this.comment.getTags()
@@ -937,7 +945,7 @@ describe(Support.getTestDialectTeaser('BelongsToMany'), () => {
         foreignKey: 'taggable_id'
       });
 
-      return this.sequelize.sync({ force: true }).then( () => {
+      return this.sequelize.sync({ force: true }).then(() => {
         return Promise.all([
           Post.create({ name: 'post1' }),
           Comment.create({ name: 'comment1' }),
