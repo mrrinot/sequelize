@@ -390,32 +390,32 @@ describe(Support.getTestDialectTeaser('BelongsToMany'), () => {
           );
         }).then(() => {
           return Promise.join(
-            // User.findOne({
-            //   where: {},
-            //   logging: console.log,
-            //   include: [
-            //     { model: Company, include: [Group] }
-            //   ]
-            // })
-            // User.findAll({
-            //   logging: console.log,
-            //   include: [
-            //     { model: Company, include: [Group] }
-            //   ]
-            // })
+            User.findOne({
+              where: {},
+              logging: console.log,
+              include: [
+                { model: Company, include: [Group] }
+              ]
+            }),
+            User.findAll({
+              logging: console.log,
+              include: [
+                { model: Company, include: [Group] }
+              ]
+            }),
             User.findOne({
               where: {},
               logging: console.log,
               include: [
                 { model: Company, required: true, include: [Group] }
               ]
+            }),
+            User.findAll({
+              logging: console.log,
+              include: [
+                { model: Company, required: true, include: [Group] }
+              ]
             })
-            // User.findAll({
-            //   logging: console.log,
-            //   include: [
-            //     { model: Company, required: true, include: [Group] }
-            //   ]
-            // })
           );
         });
       });

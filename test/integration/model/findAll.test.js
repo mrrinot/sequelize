@@ -699,6 +699,7 @@ describe(Support.getTestDialectTeaser('Model'), () => {
         });
 
         // https://github.com/sequelize/sequelize/issues/8739
+        // TODO .only
         it('supports sorting on renamed sub-query attribute', function() {
           const User = this.sequelize.define('user', {
             name: {
@@ -720,6 +721,7 @@ describe(Support.getTestDialectTeaser('Model'), () => {
             })
             .then(() => {
               return User.findAll({
+                logging: true,
                 order: ['name'],
                 limit: 2, // to force use of a sub-query
                 include: [Project]
